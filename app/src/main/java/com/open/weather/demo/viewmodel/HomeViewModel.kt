@@ -32,8 +32,4 @@ class HomeViewModel : ViewModel() {
             localDataSource?.delete(city)
         }
     }
-
-    fun getWeatherBySearch(){
-
-    }
 }
