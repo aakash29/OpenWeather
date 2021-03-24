@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.open.weather.demo.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_cityFragment"
+            app:destination="@id/cityFragment" >
+            <argument
+                android:name="latitude"
+                app:argType="string"
+                app:nullable="true"
+                android:defaultValue=""/>
+            <argument
+                android:name="longitude"
+                app:argType="string"
+                app:nullable="true"
+                android:defaultValue=""/>
+            <argument
+                android:name="isBookmark"
+                app:argType="boolean"
+                android:defaultValue="false"/>
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/cityFragment"
+        android:name="com.open.weather.demo.ui.city.CityFragment"
+        android:label="@string/title_city_weather_details"
+        tools:layout="@layout/fragment_city">
+        <argument
+            android:name="latitude"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue=""/>
+        <argument
+            android:name="longitude"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue=""/>
+        <argument
+            android:name="isBookmark"
+            app:argType="boolean"
+            android:defaultValue="false"/>
+    </fragment>
+
+</navigation>

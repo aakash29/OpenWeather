@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="data"
+            type="com.open.weather.demo.model.ForecastResponse.Forecast" />
+    </data>
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardView"
+        android:layout_width="150dp"
+        android:layout_height="190dp"
+        android:backgroundTint="@{data.getColor()}"
+        app:cardCornerRadius="16dp"
+        app:cardUseCompatPadding="true"
+        tools:backgroundTint="@android:color/holo_orange_dark"
+        tools:cardUseCompatPadding="false"
+        tools:layout_margin="8dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/text_time_of_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:backgroundTint="@{data.getColor()}"
+                android:text="@{data.getHourOfDay()}"
+                android:textColor="@color/white"
+                android:textSize="8sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SmallSp"
+                tools:text="12:00" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/text_day_of_week"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{data.getDay()}"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_time_of_day"
+                tools:text="Monday" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_common" />
+
+             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/text_temp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text='@{data.main.getTempString()}'
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                 app:layout_constraintBottom_toTopOf="@id/text_wind"
+                app:layout_constraintEnd_toStartOf="@id/text_humidity"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="23°" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/text_humidity"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text='@{String.valueOf(data.main.humidity).concat("%")}'
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/text_temp"
+                app:layout_constraintBottom_toBottomOf="@id/text_temp"
+                tools:text="25%" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/text_wind"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text='@{String.valueOf(data.wind.speed).concat(" km")}'
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/text_rain"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="24 km" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/text_rain"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text='@{data.weather.size() == 0 ? "" :data.weather.get(0).main}'
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/text_wind"
+                tools:text="rain" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

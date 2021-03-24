@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="data"
+            type="com.open.weather.demo.model.WeatherResponse" />
+
+        <variable
+            name="viewModel"
+            type="com.open.weather.demo.viewmodel.CityViewModel" />
+
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#6452f0"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.05" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.95" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/text_city_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:text='@{data.name.empty ? "" : data.name.concat(", ").concat(data.sys.country)}'
+                android:textColor="@color/white"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                android:visibility="@{data.name.empty ? View.GONE : View.VISIBLE}"
+                app:layout_constraintEnd_toStartOf="@id/img_bookmark"
+                app:layout_constraintStart_toStartOf="@id/gl_start"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Ahemdabad, IN" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img_bookmark"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:foreground="?selectableItemBackground"
+                android:onClick="@{() -> viewModel.onBookMarkClick()}"
+                android:visibility="@{data.name.empty ? View.GONE : View.VISIBLE}"
+                app:layout_constraintBottom_toBottomOf="@id/text_city_name"
+                app:layout_constraintEnd_toStartOf="@id/gl_end"
+                app:layout_constraintTop_toTopOf="@id/text_city_name"
+                app:srcCompat="@drawable/ic_unbookmark"
+                tools:ignore="UnusedAttribute" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/text_atmosphere"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text='@{data.weather.size() == 0 ? "" : String.valueOf(data.weather.get(0).description)}'
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_city_name"
+                tools:text="smoke" />
+
+            <LinearLayout
+                android:id="@+id/lyt_humidity"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/round_background"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="@id/gl_start"
+                app:layout_constraintTop_toBottomOf="@id/text_atmosphere">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_humidity" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="@{String.valueOf(data.main.humidity)}"
+                    tools:text="25" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/str_humidity" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lyt_wind"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/round_background"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toStartOf="@id/gl_end"
+                app:layout_constraintTop_toBottomOf="@id/text_atmosphere">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_wind" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="@{String.valueOf(data.wind.speed)}"
+                    tools:text="2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/str_wind" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lyt_cloud"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/round_background"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="@id/gl_start"
+                app:layout_constraintTop_toBottomOf="@id/lyt_humidity">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_cloud" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="@{String.valueOf(data.clouds.all)}"
+                    tools:text="2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/str_cloud" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/round_background"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toStartOf="@id/gl_end"
+                app:layout_constraintTop_toBottomOf="@id/lyt_wind">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_temperature" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:text='@{String.format("%.0f°",data.main.temp)}'
+                    tools:text="2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/temperature" />
+
+            </LinearLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/lbl_five_day_forecast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/next_five_forecast"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="@id/gl_start"
+                app:layout_constraintTop_toBottomOf="@id/lyt_cloud" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_forecast"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="@id/gl_end"
+                app:layout_constraintStart_toStartOf="@id/gl_start"
+                app:layout_constraintTop_toBottomOf="@id/lbl_five_day_forecast"
+                tools:listitem="@layout/item_forecast" />
+
+            <ProgressBar
+                android:id="@+id/locationLoading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

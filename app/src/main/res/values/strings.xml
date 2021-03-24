@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">OpenWeather</string>
+    <string name="title_home">Home</string>
+    <string name="title_city_weather_details">City Weather Details</string>
+    <string name="str_cloud">Clouds</string>
+    <string name="str_humidity">Humidity</string>
+    <string name="str_wind">Wind(km/hr)</string>
+    <string name="google_api_key">AIzaSyBx3GEtn95xCD0mLF4GZ-CcR47Nhi-S7C8</string>
+    <string name="next_five_forecast">Next Five Forecast</string>
+    <string name="temperature">Temperature</string>
+    <string name="search_here">search here</string>
+</resources>
